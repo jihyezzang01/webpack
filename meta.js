@@ -31,7 +31,7 @@ module.exports = {
       return templateVersion
     },
   },
-  
+
   prompts: {
     name: {
       when: 'isNotTest',
@@ -78,6 +78,7 @@ module.exports = {
       when: 'isNotTest',
       type: 'confirm',
       message: 'Use ESLint to lint your code?',
+      default: false
     },
     lintConfig: {
       when: 'isNotTest && lint',
@@ -105,6 +106,7 @@ module.exports = {
       when: 'isNotTest',
       type: 'confirm',
       message: 'Set up unit tests',
+      default: false
     },
     runner: {
       when: 'isNotTest && unit',
