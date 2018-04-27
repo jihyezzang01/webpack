@@ -6,7 +6,7 @@
       class="my-5"
     >
       <v-card-title primary-title>
-        <h3>{{text}}</h3>
+        <h3>\{{text}}</h3>
       </v-card-title>
     </v-card>
     <v-btn
