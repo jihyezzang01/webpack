@@ -11,12 +11,28 @@ const pkg = require('./package.json')
 
 const templateVersion = pkg.version
 
-const { addTestAnswers } = require('./scenarios')
-
 module.exports = {
   metalsmith: {
-    // When running tests for the template, this adds answers for the selected scenario
-    before: addTestAnswers
+    before: (metalsmith, options, helpers) => {
+      Object.assign(
+        metalsmith.metadata(),
+        { isNotMDP: false },
+        {
+          "noEscape": true,
+          "name": metalsmith._metadata.destDirName,
+          "description": "A Vue.js project",
+          "author": "",
+          "build": "standalone",
+          "router": true,
+          "lint": false,
+          "lintConfig": "none",
+          "unit": false,
+          "runner": "none",
+          "e2e": false,
+          "autoInstall": "npm"
+        }
+      )
+    },
   },
   helpers: {
     if_or(v1, v2, options) {
@@ -34,25 +50,25 @@ module.exports = {
 
   prompts: {
     name: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'string',
       required: true,
       message: 'Project name',
     },
     description: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'string',
       required: false,
       message: 'Project description',
       default: 'A Vue.js project',
     },
     author: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'string',
       message: 'Author',
     },
     build: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'list',
       message: 'Vue build',
       choices: [
@@ -70,18 +86,18 @@ module.exports = {
       ],
     },
     router: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'confirm',
       message: 'Install vue-router?',
     },
     lint: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'confirm',
       message: 'Use ESLint to lint your code?',
       default: false
     },
     lintConfig: {
-      when: 'isNotTest && lint',
+      when: 'isNotMDP && lint',
       type: 'list',
       message: 'Pick an ESLint preset',
       choices: [
@@ -103,13 +119,13 @@ module.exports = {
       ],
     },
     unit: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'confirm',
       message: 'Set up unit tests',
       default: false
     },
     runner: {
-      when: 'isNotTest && unit',
+      when: 'isNotMDP && unit',
       type: 'list',
       message: 'Pick a test runner',
       choices: [
@@ -131,13 +147,13 @@ module.exports = {
       ],
     },
     e2e: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'confirm',
       message: 'Setup e2e tests with Nightwatch?',
       default: false
     },
     autoInstall: {
-      when: 'isNotTest',
+      when: 'isNotMDP',
       type: 'list',
       message:
         'Should we run `npm install` for you after the project has been created? (recommended)',
